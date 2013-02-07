@@ -4,9 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
@@ -15,65 +12,73 @@ import org.junit.Test;
  * @author d.serdiuk
  */
 public class LocalDateIntervalTest {
-    @Test
-    public void testIntervalWithFromDateSameAsToDate_hasOneDay() {
-        // do
-        LocalDateInterval interval = new LocalDateInterval(someDate, someDate);
+    private LocalDate today = new LocalDate();
+    private LocalDate yesterday = today.minusDays(1);
+    private LocalDate tomorrow = today.plusDays(1);
 
-        // verify
+    @Test
+    public void testIncludingLast_FromDateSameAsToDate_hasOneDay() {
+        LocalDateInterval interval = LocalDateIntervals.includingLast(today, today);
+
         assertEquals(1, interval.getDays());
     }
 
-    private LocalDate someDate = new LocalDate();
-
     @Test
-    public void testIterator_iterHasNextTrue() {
-        assertTrue(getOneDayIterator(someDate).hasNext());
+    public void testIncludingLast_FromDateSameAsToDate_firstDateInIntervalEqualsToLast() {
+        LocalDateInterval interval = LocalDateIntervals.includingLast(today, today);
+
+        assertEquals(interval.getFirst(), interval.getLast());
     }
 
-    private Iterator<LocalDate> getOneDayIterator(LocalDate date) {
-        return new LocalDateInterval(date, date).iterator();
-    }
-
-    private Iterator<LocalDate> getTwoDaysIterator(LocalDate date) {
-        return new LocalDateInterval(date, date.plusDays(1)).iterator();
+    @Test (expected = IllegalArgumentException.class)
+    public void testIncludingLast_FromDateIsTodayAndToDateIsYesterday_exception() {
+        LocalDateIntervals.includingLast(today, yesterday);
     }
 
     @Test
-    public void testIterator_iterNextReturnsValue() {
-        assertEquals(someDate, getOneDayIterator(someDate).next());
+    public void testIncludingLast_FromAndToDateAreToday_containsToday() {
+        LocalDateIntervalPartial interval = LocalDateIntervals.includingLast(today, today);
+
+        assertTrue(interval.contains(today));
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void testExcludingLast_FromDateSameAsToDate_exception() {
+        LocalDateIntervals.excludingLast(today, today);
     }
 
     @Test
-    public void testIterator_iterNextReturnsNextValues() {
-        // given
-        Iterator<LocalDate> iter = getTwoDaysIterator(someDate);
+    public void testExcludingLast_FromDateIsTodayAndToDateIsTomorrow_hasOneDay() {
+        LocalDateInterval interval = LocalDateIntervals.excludingLast(today, tomorrow);
 
-        // verify
-        assertEquals(someDate, iter.next());
-        assertEquals(someDate.plusDays(1), iter.next());
-
+        assertEquals(1, interval.getDays());
     }
 
     @Test
-    public void testIterator_atTheEndOfIteration_hasNextIsFalse() {
-        // given
-        Iterator<LocalDate> iter = getOneDayIterator(someDate);
+    public void testExcludingLast_FromDateIsTodayAndToDateIsTomorrow_firstDateInIntervalEqualsToLast() {
+        LocalDateInterval interval = LocalDateIntervals.excludingLast(today, tomorrow);
 
-        // do
-        iter.next();
-
-        // verify
-        assertFalse(iter.hasNext());
+        assertEquals(interval.getFirst(), interval.getLast());
     }
 
-    @Test (expected = NoSuchElementException.class)
-    public void testIterator_atTheEndOfIteration_nextThrowsNoSuchElementException() {
-        // given
-        Iterator<LocalDate> iter = getOneDayIterator(someDate);
+    @Test
+    public void testExcludingLast_hashCodeContract() {
+        LocalDateInterval interval = LocalDateIntervals.excludingLast(yesterday, tomorrow);
+        LocalDateInterval interval2 = LocalDateIntervals.excludingLast(yesterday, tomorrow);
+        LocalDateInterval interval3 = LocalDateIntervals.excludingLast(yesterday, today);
 
-        // do
-        iter.next();
-        iter.next();
+        assertTrue(interval.equals(interval2));
+        assertTrue(interval.hashCode() == interval2.hashCode());
+        assertFalse(interval.equals(interval3));
+        assertFalse(interval.hashCode() == interval3.hashCode());
+    }
+
+    @Test
+    public void testIncludingTodayAndExcludingTomorrow_equal() {
+        LocalDateInterval interval = LocalDateIntervals.includingLast(yesterday, today);
+        LocalDateInterval interval2 = LocalDateIntervals.excludingLast(yesterday, tomorrow);
+
+        assertEquals(interval, interval2);
+        assertEquals(interval.hashCode(), interval2.hashCode());
     }
 }
