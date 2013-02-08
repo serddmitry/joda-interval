@@ -1,6 +1,7 @@
 package com.github.serddmitry.jodainterval;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -13,20 +14,23 @@ import com.google.common.base.Objects;
 /**
  * An immutable object representing interval between dates using JodaTime's LocalDate.
  * The interval is CLOSED (it includes all dates >= first and <= last.
- * Therefore, interval of 1 Jan last 3 Jan contains 3 days.</br>
+ * Therefore, interval of 1 Jan last 3 Jan contains 3 days.<br/>
  * Can be iterated over directly (since it implements Iterable).<br/>
+ * Methods and constructor will not allow null arguments.<br/>
+ * Immutable.<br/>
+ *
  * Created on 17/01/13
  * @author d.serdiuk
  */
-public class LocalDateIntervalImpl implements LocalDateInterval {
+final class LocalDateIntervalImpl implements LocalDateInterval {
     private final LocalDate first;
     private final LocalDate last;
     private final int days;
 
     LocalDateIntervalImpl(LocalDate first, LocalDate last) {
-        checkArgument(!first.isAfter(last), "'first' %s cannot be after 'last' %s", first, last);
-        this.first = first;
-        this.last = last;
+        this.first = checkNotNull(first, "lower bound of the interval cannot be null");
+        this.last = checkNotNull(last, "upper bound of the interval cannot be null");
+        checkArgument(!first.isAfter(last), "lower bound %s cannot be after upper bound %s", first, last);
         this.days = Days.daysBetween(first, last).getDays() + 1; // interval includes 'last' date, therefore, adding 1
     }
 
@@ -52,7 +56,7 @@ public class LocalDateIntervalImpl implements LocalDateInterval {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper("LocalDateIntervalPartial")
+        return Objects.toStringHelper("LocalDateInterval")
                 .add("first", first)
                 .add("last", last)
                 .add("days", days)
@@ -69,9 +73,8 @@ public class LocalDateIntervalImpl implements LocalDateInterval {
         if (obj instanceof LocalDateIntervalImpl) {
             LocalDateIntervalImpl that = (LocalDateIntervalImpl) obj;
             return Objects.equal(that.first, first) && Objects.equal(that.last, last);
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override

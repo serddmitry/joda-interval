@@ -11,10 +11,7 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 
 /**
- * TODO: describe class
- * <p/>
  * Created on 07/02/13
- *
  * @author d.serdiuk
  */
 public class LocalDateInterval_iterator {

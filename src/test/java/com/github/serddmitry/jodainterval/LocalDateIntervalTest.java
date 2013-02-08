@@ -37,9 +37,17 @@ public class LocalDateIntervalTest {
 
     @Test
     public void testIncludingLast_FromAndToDateAreToday_containsToday() {
-        LocalDateIntervalPartial interval = LocalDateIntervals.includingLast(today, today);
+        LocalDateInterval interval = LocalDateIntervals.includingLast(today, today);
 
         assertTrue(interval.contains(today));
+    }
+
+    @Test
+    public void testIncludingLast_FromAndToDateAreToday_doesntContainTomorrowNorYesterday() {
+        LocalDateInterval interval = LocalDateIntervals.includingLast(today, today);
+
+        assertFalse(interval.contains(tomorrow));
+        assertFalse(interval.contains(yesterday));
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -62,6 +70,21 @@ public class LocalDateIntervalTest {
     }
 
     @Test
+    public void testExcludingLast_FromDateIsTodayAndToDateIsTomorrow_containsToday() {
+        LocalDateInterval interval = LocalDateIntervals.excludingLast(today, tomorrow);
+
+        assertTrue(interval.contains(today));
+    }
+
+    @Test
+    public void testExcludingLast_FromDateIsTodayAndToDateIsTomorrow_doesntContainYesterdayNorTomorrow() {
+        LocalDateInterval interval = LocalDateIntervals.excludingLast(today, tomorrow);
+
+        assertFalse(interval.contains(yesterday));
+        assertFalse(interval.contains(tomorrow));
+    }
+
+    @Test
     public void testExcludingLast_hashCodeContract() {
         LocalDateInterval interval = LocalDateIntervals.excludingLast(yesterday, tomorrow);
         LocalDateInterval interval2 = LocalDateIntervals.excludingLast(yesterday, tomorrow);
@@ -80,5 +103,25 @@ public class LocalDateIntervalTest {
 
         assertEquals(interval, interval2);
         assertEquals(interval.hashCode(), interval2.hashCode());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testIncluding_NullPassedAsFirstArgument_npe() {
+        LocalDateIntervals.includingLast(null, today);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testIncluding_NullPassedAsSecondArgument_npe() {
+        LocalDateIntervals.includingLast(today, null);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testExcluding_NullPassedAsFirstArgument_npe() {
+        LocalDateIntervals.excludingLast(null, today);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testExcluding_NullPassedAsSecondArgument_npe() {
+        LocalDateIntervals.excludingLast(today, null);
     }
 }
