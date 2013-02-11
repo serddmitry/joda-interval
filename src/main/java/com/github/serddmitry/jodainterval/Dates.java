@@ -7,7 +7,7 @@ import org.joda.time.ReadablePartial;
 
 /**
  * Provides useful static methods to use with joda-time date and time classes.
- * The methods have the same meaning as Math.min and Math.max, only for dates.<br/>
+ * The methods have the same meaning as Math.min and Math.max, but for dates.<br/>
  * All methods will not tolerate nulls and throw descriptive NPEs.
  * If dates are compared and appear to be equal, the instance passed as a first argument is returned.
  * <p/>
