@@ -12,8 +12,23 @@
     <description>A library that introduces an interval of JodaTime's LocalDates</description>
     <url>https://github.com/serddmitry/joda-interval</url>
     <licenses>
-
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
+    <scm>
+        <url>https://github.com/serddmitry/joda-interval.git</url>
+        <connection>scm:git:git://github.com/serddmitry/joda-interval.git</connection>
+    </scm>
+    <developers>
+        <developer>
+            <id>serddmitry</id>
+            <name>Dmitry Serdiuk</name>
+            <email>dmitry.serdiuk@gmail.com</email>
+        </developer>
+    </developers>
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
