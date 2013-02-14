@@ -53,3 +53,6 @@ LocalDate loanStartThisMonth = loanStart.isAfter(firstDayOfThisMonth) ? loanStar
 LocalDate loanEndThisMonth = loanEnd.isBefore(lastDayOfThisMonth) ? loanEnd: endDayOfThisMonth;
 ```
 Additionally, a NPE with meaningful message is thrown if either date is null.
+
+
+-------------------------------
