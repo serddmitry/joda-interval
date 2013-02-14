@@ -26,9 +26,9 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/serddmitry/joda-interval</url>
-        <connection>scm:git:https://github.com/serddmitry/joda-interval.git</connection>
-        <developerConnection>scm:git:https://github.com/serddmitry/joda-interval.git</developerConnection>
+        <url>git@github.com:serddmitry/joda-interval.git</url>
+        <connection>scm:git:git@github.com:serddmitry/joda-interval.git</connection>
+        <developerConnection>scm:git:git@github.com:serddmitry/joda-interval.git</developerConnection>
     </scm>
     <developers>
         <developer>
