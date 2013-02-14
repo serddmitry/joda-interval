@@ -11,6 +11,13 @@
     <name>Joda Interval</name>
     <description>A library that introduces an interval of JodaTime's LocalDates</description>
     <url>https://github.com/serddmitry/joda-interval</url>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -19,8 +26,9 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/serddmitry/joda-interval.git</url>
-        <connection>scm:git:git://github.com/serddmitry/joda-interval.git</connection>
+        <url>git@github.com:serddmitry/joda-interval.git</url>
+        <connection>scm:git:git@github.com:serddmitry/joda-interval.git</connection>
+        <developerConnection>scm:git:git@github.com:serddmitry/joda-interval.git</developerConnection>
     </scm>
     <developers>
         <developer>
@@ -50,46 +58,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
