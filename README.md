@@ -1,3 +1,13 @@
+## How to get it
+joda-interval is available on Maven Central, so in order to use it add the following dependency to your pom.xml.
+```
+<dependency>
+    <groupId>com.github.serddmitry</groupId>
+    <artifactId>joda-interval</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
 ## LocalDateInterval
 
 LocalDateInterval is an abstraction that holds, well, an interval of dates, starting from start date 
