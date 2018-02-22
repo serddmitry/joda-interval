@@ -16,7 +16,7 @@
 
 package com.github.serddmitry.jodainterval;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 import org.joda.time.ReadableInstant;
 import org.joda.time.ReadablePartial;
@@ -36,8 +36,8 @@ public class Dates {
      * @return earlier of two dates
      */
     public static <T extends ReadablePartial> T earlier(T date1, T date2) {
-        checkNotNull(date1, "cannot get earlier of two dates if first date is null");
-        checkNotNull(date2, "cannot get earlier of two dates if second date is null");
+        requireNonNull(date2, "cannot get earlier of two dates if second date is null");
+        requireNonNull(date1, "cannot get earlier of two dates if first date is null");
         return date1.compareTo(date2) <= 0 ? date1 : date2;
     }
 
@@ -46,8 +46,8 @@ public class Dates {
      * @return later of two dates
      */
     public static <T extends ReadablePartial> T later(T date1, T date2) {
-        checkNotNull(date1, "cannot get later of two dates if first date is null");
-        checkNotNull(date2, "cannot get later of two dates if second date is null");
+        requireNonNull(date1, "cannot get later of two dates if first date is null");
+        requireNonNull(date2, "cannot get later of two dates if second date is null");
         return date1.compareTo(date2) >= 0? date1: date2;
     }
 
@@ -56,8 +56,8 @@ public class Dates {
      * @return earlier of two dates
      */
     public static <T extends ReadableInstant> T earlier(T date1, T date2) {
-        checkNotNull(date1, "cannot get earlier of two dates if first date is null");
-        checkNotNull(date2, "cannot get earlier of two dates if second date is null");
+        requireNonNull(date1, "cannot get earlier of two dates if first date is null");
+        requireNonNull(date2, "cannot get earlier of two dates if second date is null");
         return date1.compareTo(date2) <= 0? date1: date2;
     }
 
@@ -66,8 +66,8 @@ public class Dates {
      * @return later of two dates
      */
     public static <T extends ReadableInstant> T later(T date1, T date2) {
-        checkNotNull(date1, "cannot get later of two dates if first date is null");
-        checkNotNull(date2, "cannot get later of two dates if second date is null");
+        requireNonNull(date1, "cannot get later of two dates if first date is null");
+        requireNonNull(date2, "cannot get later of two dates if second date is null");
         return date1.compareTo(date2) >= 0? date1: date2;
     }
 }

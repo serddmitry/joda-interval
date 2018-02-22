@@ -16,16 +16,13 @@
 
 package com.github.serddmitry.jodainterval;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
-
-import com.google.common.base.Objects;
 
 /**
  * An immutable object representing interval between dates using JodaTime's LocalDate.
@@ -44,9 +41,11 @@ final class LocalDateIntervalImpl implements LocalDateInterval {
     private final int days;
 
     LocalDateIntervalImpl(LocalDate first, LocalDate last) {
-        this.first = checkNotNull(first, "lower bound of the interval cannot be null");
-        this.last = checkNotNull(last, "upper bound of the interval cannot be null");
-        checkArgument(!first.isAfter(last), "lower bound %s cannot be after upper bound %s", first, last);
+        this.first = requireNonNull(first, "lower bound of the interval cannot be null");
+        this.last = requireNonNull(last, "upper bound of the interval cannot be null");
+        if (first.isAfter(last)) {
+            throw new IllegalArgumentException("lower bound " + first + " cannot be after upper bound " + last);
+        }
         this.days = Days.daysBetween(first, last).getDays() + 1; // interval includes 'last' date, therefore, adding 1
     }
 
@@ -72,25 +71,29 @@ final class LocalDateIntervalImpl implements LocalDateInterval {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper("LocalDateInterval")
-                .add("first", first)
-                .add("last", last)
-                .add("days", days)
-                .toString();
+        return "LocalDateIntervalImpl{" +
+                "first=" + first +
+                ", last=" + last +
+                ", days=" + days +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LocalDateIntervalImpl)) return false;
+
+        LocalDateIntervalImpl that = (LocalDateIntervalImpl) o;
+
+        if (!getFirst().equals(that.getFirst())) return false;
+        return getLast().equals(that.getLast());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(first, last);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof LocalDateIntervalImpl) {
-            LocalDateIntervalImpl that = (LocalDateIntervalImpl) obj;
-            return Objects.equal(that.first, first) && Objects.equal(that.last, last);
-        }
-        return false;
+        int result = getFirst().hashCode();
+        result = 31 * result + getLast().hashCode();
+        return result;
     }
 
     @Override

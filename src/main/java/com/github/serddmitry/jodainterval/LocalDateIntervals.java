@@ -16,7 +16,7 @@
 
 package com.github.serddmitry.jodainterval;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 import org.joda.time.LocalDate;
 
@@ -35,7 +35,7 @@ public class LocalDateIntervals {
 
     /** An interval [from .. to) - equivalent to [from .. to-1] */
     public static LocalDateInterval excludingLast(LocalDate from, LocalDate to) {
-        checkNotNull(to, "upper bound of the interval cannot be null");
+        requireNonNull(to, "upper bound of the interval cannot be null");
         return new LocalDateIntervalImpl(from, to.minusDays(1));
     }
 
@@ -46,7 +46,7 @@ public class LocalDateIntervals {
 
     /** An interval (-∞ .. to) - equivalent to (-∞ .. to-1] */
     public static LocalDateIntervalPartial upToAndExcluding(LocalDate to) {
-        checkNotNull(to, "upper bound of the interval cannot be null");
+        requireNonNull(to, "upper bound of the interval cannot be null");
         return new LocalDateIntervalWithUpperBound(to.minusDays(1));
     }
 
@@ -57,7 +57,7 @@ public class LocalDateIntervals {
 
     /** An interval (from .. ∞) - equivalent to [from+1 .. ∞) */
     public static LocalDateIntervalPartial sinceAndExcluding(LocalDate from) {
-        checkNotNull(from, "lower bound of the interval cannot be null");
+        requireNonNull(from, "lower bound of the interval cannot be null");
         return new LocalDateIntervalWithLowerBound(from.plusDays(1));
     }
 }

@@ -16,11 +16,9 @@
 
 package com.github.serddmitry.jodainterval;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 import org.joda.time.LocalDate;
-
-import com.google.common.base.Objects;
 
 /**
  * Created on 07/02/13
@@ -30,7 +28,7 @@ final class LocalDateIntervalWithLowerBound implements LocalDateIntervalPartial 
     private final LocalDate first;
 
     LocalDateIntervalWithLowerBound(LocalDate first) {
-        this.first = checkNotNull(first, "lower bound of the interval cannot be null");
+        this.first = requireNonNull(first, "lower bound of the interval cannot be null");
     }
 
     @Override
@@ -40,10 +38,9 @@ final class LocalDateIntervalWithLowerBound implements LocalDateIntervalPartial 
 
     @Override
     public String toString() {
-        return Objects.toStringHelper("LocalDateInterval")
-                .add("first", first)
-                .add("last", "∞")
-                .toString();
+        return "LocalDateIntervalWithLowerBound{" +
+                "first=" + first +
+                ", last=∞}";
     }
 
     @Override
