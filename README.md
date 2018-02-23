@@ -1,4 +1,4 @@
-## How to get it
+## How to get it [![Build Status](https://travis-ci.org/serddmitry/joda-interval.svg?branch=master)](https://travis-ci.org/serddmitry/joda-interval)
 joda-interval is available on Maven Central, so in order to use it add the following dependency to your pom.xml.
 ```
 <dependency>
